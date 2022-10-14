@@ -91,13 +91,13 @@ class html
         //if(is_null(self::$cache) === true) self::cache(true);
     }
 
-    public static function debug($function = "", $string = "")
+    public static function debug($function = "", $string = ""): void
     {
         if( !html::$debug ) return;
         echo $function.": ".trim($string)."\n";
     }
 
-    public static function cache($state = NULL)
+    public static function cache($state = NULL): string
     {
         if( class_exists('cache') && is_null($state) === false )
         {
@@ -112,7 +112,7 @@ class html
         return html::$cache;
     }
 
-    public static function tidy($html, $customConfig = array())
+    public static function tidy($html, $customConfig = array()): string
     {
         if( \class_exists('tidy') )
         {
@@ -146,12 +146,12 @@ class html
         return $html;
     }
 
-    public static function clean()
+    public static function clean(): void
     {
         self::$form = NULL;
     }
 
-    public static function delete($name)
+    public static function delete($name): void
     {
         $name = self::getOrigin($name);
         if( isset(self::$form[$name]) ) unset(self::$form[$name]);
@@ -161,7 +161,7 @@ class html
      *
      * @return html
      */
-    public static function notag()
+    public static function notag(): html
     {
         return self::tag()->html(func_get_args());
     }
@@ -170,7 +170,7 @@ class html
      *
      * @return html
      */
-    public static function tag()
+    public static function tag(): html
     {
         $args = self::__prepareArguments(func_get_args());
         $tag = self::_createTag($args["nodename"]);
@@ -196,7 +196,7 @@ class html
         return $tag;
     }
 
-    private static function __prepareArguments(array $argData)
+    private static function __prepareArguments(array $argData): array
     {
         $argData = self::__flattenArguments($argData);
         //$argData = self::__reorderArguments($argData);
@@ -204,7 +204,7 @@ class html
         return $argData;
     }
 
-    private static function __reorderArguments($argData)
+    private static function __reorderArguments($argData): array
     {
         for( $tc = 2; $tc >= 1; $tc-- )
         {
@@ -231,7 +231,7 @@ class html
         return $argData;
     }
 
-    private function __argumentGuesser(array $argData)
+    private function __argumentGuesser(array $argData): array
     {
         $typ = "";
         $typSig = "";
@@ -390,7 +390,7 @@ class html
         return $descArray;
     }
 
-    private function __flattenArguments(array $argData)
+    private function __flattenArguments(array $argData): array
     {
         $argOut = array();
         foreach( $argData as $key => $val )
@@ -412,7 +412,7 @@ class html
         return $argData;
     }
 
-    private static function _createTag($nodename = false)
+    private static function _createTag($nodename = false): html
     {
         $id = uniqid();
         if( !isset(self::$tag[$id]) ) self::$tag[$id] = new self();

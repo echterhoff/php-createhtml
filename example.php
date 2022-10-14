@@ -5,8 +5,10 @@
 require "html.class.php";
 error_reporting(E_ERROR);
 
+echo html()->_parse_from_string('<div></div>');
 echo create('html')
     ->append(
         title('Test')->append(
             body('class','main',
-                div('Some content'))));
+                div('Some content')
+            )));
